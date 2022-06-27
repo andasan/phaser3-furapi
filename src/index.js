@@ -39,7 +39,7 @@ function preload() {
 function create() {
   this.add.image(0, 0, "sky").setOrigin(0, 0);
   bird = this.physics.add.sprite(INIT_BIRD_POS.x, INIT_BIRD_POS.y, "bird").setOrigin(0.5);
-  bird.body.gravity.y = 400;
+  // bird.body.gravity.y = 400;
 
   pipes = this.physics.add.group();
 
@@ -66,6 +66,8 @@ function update(time, delta) {
   if (bird.y > config.height || bird.y < -bird.height) {
     restartPosition();
   }
+
+  recyclePipes();
 }
 
 function pipePlacement(uPipe, lPipe){
@@ -93,6 +95,19 @@ function getNextPipe(){
   })
 
   return rightMostX
+}
+
+function recyclePipes(){
+  const tempPipes = []
+  pipes.getChildren().forEach(pipe => {
+    if(pipe.getBounds().right < 0){
+      tempPipes.push(pipe)
+
+      if(tempPipes.length === 2){
+        pipePlacement(...tempPipes)
+      }
+    }
+  })
 }
 
 function restartPosition() {
