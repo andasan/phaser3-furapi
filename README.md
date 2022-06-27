@@ -1,33 +1,34 @@
-# initial code
+# Furapi - Phaser3 engine
 
-```bash
+## Links
 
-import Phaser from "phaser";
+### Phaser3
 
-const config = {
-  type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 200 }
-    }
-  },
-  scene: {
-    preload: preload,
-    create: create
-  }
-};
+- [FAQ](https://github.com/phaser-discord/community/blob/master/FAQ.md)
+- [Official discord channel](https://discord.gg/phaser)
+- [API document](https://photonstorm.github.io/phaser3-docs/)
+- [Examples](https://labs.phaser.io/)
+- [Bug report](https://github.com/photonstorm/phaser/issues)
 
-new Phaser.Game(config);
+## Demo
 
-function preload () {
-  this.load.image('sky', 'assets/sky.png');
-}
+### Prepare
 
-function create () {
-  this.add.image(400, 300, 'sky');
-}
+1. Install [node.js](https://nodejs.org/en/) 
 
-```
+### Run examples
+
+To start the game run:
+
+1. npm install
+2. npm run dev
+3. open localhost:8080
+
+
+## File structure
+
+- Folder `assets` : Game media assets
+- Folder `def`: TypeScript definitions
+- Folder `src` : Game code
+    - `scenes\PlayScene.js` : Game logic and scene.
+    - `index.js` : Entry point.
