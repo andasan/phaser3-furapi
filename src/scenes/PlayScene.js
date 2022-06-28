@@ -59,6 +59,8 @@ class PlayScene extends BaseScene {
 
   createBird() {
     this.bird = this.physics.add.sprite(this.config.startPosition.x, this.config.startPosition.y, "bird").setFlipX(true).setScale(2).setOrigin(0);
+
+    this.bird.setBodySize(this.bird.width, this.bird.height - 6);
     this.bird.body.gravity.y = 400;
     this.bird.setCollideWorldBounds(true);
   }
@@ -205,6 +207,7 @@ class PlayScene extends BaseScene {
   }
 
   gameOver() {
+    this.bird.anims.stop(null, true);
     this.physics.pause();
     this.bird.setTint(0xff0000);
 
