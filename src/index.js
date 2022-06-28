@@ -28,7 +28,8 @@ const config = {
       // debug: true
     }
   },
-  scene: initScenes()
+  scene: initScenes(),
+  pixelArt: true
 };
 
 new Phaser.Game(config);
