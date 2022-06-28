@@ -9,6 +9,7 @@ class PlayScene extends BaseScene {
 
     this.bird = null;
     this.pipes = null;
+    this.pauseButton = null;
 
     this.PIPE_GAP_RANGE = [150, 250];
     this.PIPE_X_GAP_RANGE = [400, 500];
@@ -17,7 +18,6 @@ class PlayScene extends BaseScene {
     this.score = 0;
     this.scoreText = '';
 
-    this.isGameOver = false;
     this.isPaused = false;
   }
 
@@ -73,9 +73,9 @@ class PlayScene extends BaseScene {
 
   createPause(){
     this.isPaused = false;
-    const pauseButton = this.add.image(this.config.width -10, this.config.height - 10, 'pause').setInteractive().setScale(2).setOrigin(1);
+    this.pauseButton = this.add.image(this.config.width -10, this.config.height - 10, 'pause').setInteractive().setScale(2).setOrigin(1);
     
-    pauseButton.on('pointerdown', () => {
+    this.pauseButton.on('pointerdown', () => {
         this.isPaused = true;
         this.physics.pause();
         this.scene.pause();
@@ -89,7 +89,7 @@ class PlayScene extends BaseScene {
   }
 
   listentToEvents(){
-    if (this.pauseEvent || this.isGameOver) return;
+    if (this.pauseEvent) return;
 
     this.pauseEvent = this.events.on('resume', () => {
         this.initialTime = 3;
@@ -176,9 +176,10 @@ class PlayScene extends BaseScene {
   }
 
   gameOver() {
-    this.isGameOver = true;
     this.physics.pause();
     this.bird.setTint(0xff0000);
+
+    this.pauseButton.destroy();
 
     this.saveBestScore();
 
