@@ -26,6 +26,7 @@ class PlayScene extends BaseScene {
     this.createScore();
     this.createPause();
     this.handleInputs();
+    this.listentToEvents();
   }
 
   update() {
@@ -73,12 +74,26 @@ class PlayScene extends BaseScene {
     pauseButton.on('pointerdown', () => {
         this.physics.pause();
         this.scene.pause();
+        this.scene.launch('PauseScene');
     })
   }
 
   handleInputs() {
     this.input.keyboard.on("keydown_SPACE", this.flap, this);
     this.input.on("pointerdown", this.flap, this);
+  }
+
+  listentToEvents(){
+    this.events.on('resume', () => {
+        this.initialTime = 3;
+        this.countDownText = this.add.text(...this.screenCenter, "Fly in " + this.initialTime, this.fontOptions).setOrigin(0.5);
+        this.timedEvent = this.time.addEvent({
+            delay: 1000,
+            callback: () => console.log(this.initialTime--),
+            callbackScope: this,
+            loop: true
+        })
+    })
   }
 
   checkGameStatus() {
