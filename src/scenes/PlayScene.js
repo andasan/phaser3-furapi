@@ -11,17 +11,24 @@ class PlayScene extends BaseScene {
     this.pipes = null;
     this.pauseButton = null;
 
-    this.PIPE_GAP_RANGE = [150, 250];
-    this.PIPE_X_GAP_RANGE = [400, 500];
+    // this.PIPE_GAP_RANGE = [150, 250];
+    // this.PIPE_X_GAP_RANGE = [400, 500];
     this.FLAP_VELOCITY = 300;
 
     this.score = 0;
     this.scoreText = '';
 
     this.isPaused = false;
+    this.currentDifficulty = 'easy';
+    this.difficulties = {
+        'easy': { PIPE_X_GAP_RANGE: [400,500], PIPE_GAP_RANGE: [150, 250] },
+        'normal': { PIPE_X_GAP_RANGE: [280,330], PIPE_GAP_RANGE: [140, 190] },
+        'hard': { PIPE_X_GAP_RANGE: [250,310], PIPE_GAP_RANGE: [120, 170] },
+    }
   }
 
   create() {
+    this.currentDifficulty = 'easy';
     super.create();
     this.createBird();
     this.createPipes();
@@ -126,13 +133,14 @@ class PlayScene extends BaseScene {
   }
 
   pipePlacement(uPipe, lPipe) {
+    const difficulty = this.difficulties[this.currentDifficulty];
     const rightMostX = this.getNextPipe();
-    const pipeYGap = Phaser.Math.Between(...this.PIPE_GAP_RANGE);
+    const pipeYGap = Phaser.Math.Between(...difficulty.PIPE_GAP_RANGE);
     const pipePos = Phaser.Math.Between(
       0 + 20,
       this.config.height - 20 - pipeYGap
     );
-    const pipeHorizontalGap = Phaser.Math.Between(...this.PIPE_X_GAP_RANGE);
+    const pipeHorizontalGap = Phaser.Math.Between(...difficulty.PIPE_X_GAP_RANGE);
 
     uPipe.x = rightMostX + pipeHorizontalGap;
     uPipe.y = pipePos;
